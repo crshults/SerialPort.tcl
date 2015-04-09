@@ -23,6 +23,8 @@ GetNextSerialPort; # -> //./COM1
 GetNextSerialPort; # -> //./COM7
 ```
 
+**The Rest of the Interface:**
+
 `open`: Opens the next available port from the list
 
 `close`: Closes the currently open port
