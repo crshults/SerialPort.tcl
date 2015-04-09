@@ -1,15 +1,16 @@
-package provide serial_port 0.0.1
+package provide serial_port 0.0.2
 
 package require TclOO
 package require registry
 package require list_tools
 
 oo::class create serial_port {
-    variable _port_name _port _baud_rate _parity _system_serial_ports
+    variable _port_name _port _baud_rate _parity _data_bits _system_serial_ports
 
-    constructor {baud_rate parity} {
+    constructor {baud_rate parity {data_bits 8}} {
         set _baud_rate $baud_rate
         set _parity $parity
+        set _data_bits $data_bits
         set _system_serial_ports [my AvailableSerialPortList]
         my open
     }
@@ -27,7 +28,7 @@ oo::class create serial_port {
             -buffering none                \
             -encoding binary               \
             -translation {binary binary}   \
-            -mode $_baud_rate,$_parity,8,1 \
+            -mode $_baud_rate,$_parity,$_data_bits,1 \
             -pollinterval 1}
         return
     }
