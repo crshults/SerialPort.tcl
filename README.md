@@ -13,6 +13,8 @@ myDevice send \x01\xff\x55\xaa
 set data [myDevice read]
 ```
 
+**A Quick Note About the Internals:**
+
 Now, if the private methods [AvailableSerialPortList] and [GetNextSerialPort] were callable by you, here's what they might do:
 
 ```
@@ -25,7 +27,7 @@ GetNextSerialPort; # -> //./COM7
 
 **The Rest of the Interface:**
 
-`open`: Opens the next available port from the list
+`open`: Opens the next available port from the list. Calling open repeatedly will walk you through all the ports via GetNextSerialPort
 
 `close`: Closes the currently open port
 
