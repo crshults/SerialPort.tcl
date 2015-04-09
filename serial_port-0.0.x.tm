@@ -1,4 +1,4 @@
-package provide serial_port 0.0.2
+package provide serial_port 0.0.3
 
 package require TclOO
 package require registry
@@ -64,10 +64,13 @@ oo::class create serial_port {
 
     method AvailableSerialPortList {} {
         set SerialCommKey {HKEY_LOCAL_MACHINE\Hardware\DeviceMap\SerialComm}
+        set port_list {}
+        catch {
         foreach port [registry values $SerialCommKey] {
-            lappend result //./[registry get $SerialCommKey $port]
+                lappend port_list //./[registry get $SerialCommKey $port]
+            }
         }
-        return $result
+        return $port_list
     }
 
     method GetNextSerialPort {} {
