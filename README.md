@@ -42,5 +42,5 @@ GetNextSerialPort; # -> //./COM7
 ## How to make it available for use:
 
 1. Take the Tcl module file and drop it into `<TclInstallRoot>\lib\tcl8\8.6\`
-2. Rename it to serial_port-0.0.3.tm
+2. Rename it to serial_port-0.0.4.tm
 3. `package require serial_port`
