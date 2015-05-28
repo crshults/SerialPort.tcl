@@ -1,7 +1,7 @@
-package provide serial_port 0.0.3
+package provide serial_port 0.0.4
 
 package require TclOO
-package require registry
+package require platform
 package require list_tools
 
 oo::class create serial_port {
@@ -63,13 +63,25 @@ oo::class create serial_port {
     }
 
     method AvailableSerialPortList {} {
-        set SerialCommKey {HKEY_LOCAL_MACHINE\Hardware\DeviceMap\SerialComm}
         set port_list {}
+        set platform [lindex [split [platform::generic] -] 0]
+
+        switch -- $platform {
+            win32 {
+                package require registry
+                set SerialCommKey {HKEY_LOCAL_MACHINE\Hardware\DeviceMap\SerialComm}
         catch {
-        foreach port [registry values $SerialCommKey] {
+            foreach port [registry values $SerialCommKey] {
                 lappend port_list //./[registry get $SerialCommKey $port]
             }
         }
+            }
+
+            linux {
+                set port_list [glob -nocomplain {/dev/ttyS[0-9]} {/dev/ttyUSB[0-9]}]
+            }
+        }
+
         return $port_list
     }
 
